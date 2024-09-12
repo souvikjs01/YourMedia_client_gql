@@ -79,8 +79,9 @@ function Register(){
     const outerTheme = useTheme();
     const [name, SetName] = useState("");
     const [email, SetEmail] = useState("");
+    const [pushed, setpushed] = useState("Register");
     const [password, SetPassword] = useState("");
-    const RegisterAPI = 'https://graphqlserveryourmedia-production.up.railway.app/auth/register/';
+    const RegisterAPI = 'https://graphql-server-yourmedia.onrender.com/auth/register/';
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = React.useState(false);
     const [focused, setFocused] = useState(false);
@@ -94,14 +95,15 @@ function Register(){
 
     const RegisterUser=async()=>{
         try{
+          setpushed("Registering you! It may take some while :)");
             const Registered = await axios.post(RegisterAPI,{
                 password: password,
                 username: name,
                 email: email,
-            }).then(()=>{console.log("User Registered"); navigate("/")})
-            .catch((err)=>{console.log("Couldn't register user", err.msg,
-
-            SetRgstSuccess("Couldn't Register User! Try Later"))});
+            })
+            
+              navigate("/");
+              
         }
         catch(error){
             console.log("Unknown Server Error, Try Later");
@@ -121,7 +123,7 @@ function Register(){
         autoComplete="off"
         >
         <center className="center">
-        <h2 className="heading">Register</h2>
+        <h2 className="heading">{pushed}</h2>
         <div className="input" style={{ marginTop: '5%' , marginBottom: '5%'}}>
         <ThemeProvider theme={customTheme(outerTheme)}>
         <TextField
